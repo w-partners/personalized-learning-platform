@@ -48,3 +48,18 @@ ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해
 - ✅ .gitignore 구성
 - ⏳ GitHub 원격 저장소 연결 (대기 중)
 
+
+### 2025-06-17 04:45
+- Git 원격 저장소 URL 설정 완료
+  - Origin: https://github.com/mvp1-user/personalized-learning-platform.git
+- GitHub 인증이 필요한 상태 (Personal Access Token 또는 SSH 키)
+- **결정**: 로컬에서 개발 진행 후 나중에 GitHub 연결
+
+### 📋 GitHub 연결 계획
+1. Personal Access Token 생성 또는 SSH 키 등록
+2. Git credential 설정
+3. 첫 push 실행
+4. GitHub 저장소 공개 후 자동 배포 설정
+
+**현재 상황**: 로컬 Git 저장소 완료, 원격 연결 대기 중
+
