@@ -1,0 +1,35 @@
+# 개인화 AI 학습 플랫폼 MVP
+
+## 📘 프로젝트 개요
+
+ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해 상태에 따라 자동으로 문제를 생성하고 반복 학습을 유도하는 AI 기반 MVP 시스템
+
+### 🎯 핵심 목표
+- 학생 개별 성취도 관리 (개념별 이해도 1-5단계)
+- ChatGPT를 통한 자동 문제 생성 및 피드백
+- 서버는 최소한의 중개 역할만 담당
+
+### 🛠 기술 스택
+- **백엔드**: FastAPI + PostgreSQL + Docker
+- **연동**: ChatGPT Custom Function (Webhook 기반)
+- **문서 변환**: HTML → PDF 생성
+- **배포**: Docker Compose + SSH 서버
+
+## 📋 작업 계획
+
+### 작업 목록 (총 7개)
+1. ✅ **프로젝트 환경 초기화 및 Docker 구성** - 진행 중
+2. ⏳ **데이터베이스 스키마 설계 및 구현**
+3. ⏳ **FastAPI 웹서버 기본 구조 구현**
+4. ⏳ **학생 정보 관리 API 구현**
+5. ⏳ **ChatGPT Custom Function 연동 Webhook 구현**
+6. ⏳ **HTML to PDF 변환 기능 구현**
+7. ⏳ **Docker 배포 및 통합 테스트**
+
+## 🔄 실행 로그
+
+### 2025-06-17 04:38
+- 프로젝트 디렉토리 생성: `/home/mvp1/projects/개인화AI학습플랫폼MVP`
+- Git 저장소 초기화 완료
+- README.md 기본 구조 생성
+
