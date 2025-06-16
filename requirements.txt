@@ -1,0 +1,25 @@
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Database
+psycopg2-binary==2.9.7
+sqlalchemy==2.0.23
+alembic==1.12.1
+
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.0.3
+
+# PDF Generation
+weasyprint==61.2
+Pillow==10.1.0
+
+# HTTP Client
+httpx==0.25.2
+aiofiles==23.2.1
+
+# Development
+python-dotenv==1.0.0
+pytest==7.4.3
+pytest-asyncio==0.21.1
