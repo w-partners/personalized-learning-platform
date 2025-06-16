@@ -33,3 +33,18 @@ ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해
 - Git 저장소 초기화 완료
 - README.md 기본 구조 생성
 
+
+### 2025-06-17 04:42
+- Git 저장소 로컬 초기화 완료
+- .gitignore 파일 생성 (Python, Docker, 환경변수 등)
+- GitHub CLI 설치 완료 (v2.74.1)
+- 첫 번째 커밋 완료: 프로젝트 기본 구조
+- **다음 단계**: GitHub 원격 저장소 연결 예정
+
+### 작업 진행 상황
+- ✅ 프로젝트 디렉토리 생성
+- ✅ Git 초기화
+- ✅ README.md 구조 설정  
+- ✅ .gitignore 구성
+- ⏳ GitHub 원격 저장소 연결 (대기 중)
+
