@@ -88,3 +88,28 @@ ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해
 - Health Check: ✅ 통과
 
 🔄 다음 단계: Task 2 - 데이터베이스 스키마 설계
+
+### 2025-06-17 05:48
+- ✅ Task 2 완료: 데이터베이스 스키마 설계 및 구현
+
+🗄️ 완성된 구성요소:
+- SQLAlchemy Student 모델 (JSONB 개념별 이해도)
+- PostgreSQL 테이블 생성 완료 (students)
+- StudentService CRUD 클래스 구현
+- 데이터베이스 연결 모듈 (database.py)
+- 마이그레이션 스크립트 (migrations/init_db.py)
+
+✅ 서버 테스트 결과:
+- PostgreSQL 연결: ✅ 성공
+- 테이블 생성: ✅ students 테이블 + 인덱스
+- CRUD 작업: ✅ 생성/조회/업데이트 모두 통과
+- API 문서: ✅ /docs 정상 생성
+
+📊 테이블 구조:
+- id (SERIAL PRIMARY KEY)
+- student_code (VARCHAR 50, UNIQUE) 
+- name, grade, school
+- concepts (JSONB) - 개념별 이해도 1-5점
+- created_at, updated_at, notes, parent_email
+
+🔄 다음 단계: Task 3 - FastAPI 웹서버 기본 구조

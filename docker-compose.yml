@@ -9,7 +9,7 @@ services:
       - .:/app
     working_dir: /app
     environment:
-      - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5432/learning_platform
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/learning_platform
       - PYTHONPATH=/app
     depends_on:
       - postgres
