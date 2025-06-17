@@ -3,154 +3,561 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입 - AI 학습 플랫폼</title>
-    <link rel="stylesheet" href="css/auth.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>회원가입 - AI 학습도우미 예팸</title>
+    
+    <!-- Pretendard 폰트 -->
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+    
+    <!-- 스타일시트 -->
+    <link rel="stylesheet" href="css/modern-style.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-purple) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-2xl);
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .auth-subtitle {
+            color: var(--neutral-600);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .user-type-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .user-type-card {
+            background: var(--neutral-100);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .user-type-card:hover {
+            background: var(--neutral-200);
+            transform: translateY(-2px);
+        }
+        
+        .user-type-card.active {
+            background: rgba(74, 144, 226, 0.1);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+        
+        .user-type-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .user-type-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .user-type-desc {
+            font-size: 0.8rem;
+            color: var(--neutral-600);
+        }
+        
+        .form-container {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--neutral-800);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--space-md);
+            font-size: 1rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: var(--space-xs);
+        }
+        
+        .password-strength {
+            margin-top: var(--space-xs);
+            font-size: 0.875rem;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            background: var(--neutral-200);
+            border-radius: 2px;
+            margin-top: var(--space-xs);
+            overflow: hidden;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            transition: all var(--transition-base);
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: var(--error); }
+        .strength-medium { background: var(--warning); }
+        .strength-strong { background: var(--success); }
+        
+        .signup-btn {
+            width: 100%;
+            padding: var(--space-md);
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #357ABD 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .signup-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .signup-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-links {
+            text-align: center;
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--neutral-200);
+        }
+        
+        .auth-links a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .user-type-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            
+            .user-type-card {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: var(--space-md);
+            }
+            
+            .user-type-icon {
+                margin-bottom: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="logo">
-                    <i class="fas fa-brain"></i>
-                    <h1>AI 학습 플랫폼</h1>
-                </div>
-                <h2>회원가입</h2>
-                <p>개인화 AI 학습 시스템에 오신 것을 환영합니다</p>
-            </div>
-
-            <form id="signupForm" class="auth-form">
-                <div class="form-group">
-                    <label for="email">
-                        <i class="fas fa-envelope"></i>
-                        이메일
-                    </label>
-                    <input type="email" id="email" name="email" placeholder="user@example.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i>
-                        비밀번호
-                    </label>
-                    <input type="password" id="password" name="password" placeholder="8자리 이상 입력해주세요" required>
-                    <div class="password-strength">
-                        <div class="strength-bar"></div>
-                        <span class="strength-text">비밀번호 강도</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirmPassword">
-                        <i class="fas fa-lock"></i>
-                        비밀번호 확인
-                    </label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호를 다시 입력해주세요" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="name">
-                        <i class="fas fa-user"></i>
-                        이름
-                    </label>
-                    <input type="text" id="name" name="name" placeholder="김철수" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="role">
-                            <i class="fas fa-user-tag"></i>
-                            역할
-                        </label>
-                        <select id="role" name="role" required>
-                            <option value="">선택해주세요</option>
-                            <option value="student">학생</option>
-                            <option value="teacher">선생님</option>
-                            <option value="parent">학부모</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="school">
-                            <i class="fas fa-school"></i>
-                            소속
-                        </label>
-                        <input type="text" id="school" name="school" placeholder="서울초등학교">
-                    </div>
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="agreeTerms" required>
-                        <span class="checkmark"></span>
-                        <span class="checkbox-text">
-                            <a href="#" class="link">이용약관</a> 및 
-                            <a href="#" class="link">개인정보처리방침</a>에 동의합니다
-                        </span>
-                    </label>
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="agreeMarketing">
-                        <span class="checkmark"></span>
-                        <span class="checkbox-text">
-                            마케팅 정보 수신에 동의합니다 (선택)
-                        </span>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="signupBtn">
-                    <i class="fas fa-user-plus"></i>
-                    회원가입
-                </button>
-            </form>
-
-            <div class="auth-footer">
-                <p>이미 계정이 있으신가요? <a href="login.html" class="link">로그인</a></p>
-            </div>
-
-            <div class="social-login">
-                <div class="divider">
-                    <span>또는</span>
-                </div>
-                <div class="social-buttons">
-                    <button class="social-btn google">
-                        <i class="fab fa-google"></i>
-                        Google로 회원가입
-                    </button>
-                    <button class="social-btn github">
-                        <i class="fab fa-github"></i>
-                        GitHub로 회원가입
-                    </button>
+        <div class="auth-header">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <div>
+                    <h1 class="auth-title">AI 학습도우미 예팸</h1>
+                    <p class="auth-subtitle">개인화 AI 학습을 시작해보세요</p>
                 </div>
             </div>
         </div>
 
-        <div class="auth-visual">
-            <div class="visual-content">
-                <h3>AI 기반 개인화 학습</h3>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> 개별 맞춤 문제 생성</li>
-                    <li><i class="fas fa-check"></i> 실시간 성취도 분석</li>
-                    <li><i class="fas fa-check"></i> ChatGPT 연동 학습</li>
-                    <li><i class="fas fa-check"></i> 약점 보완 시스템</li>
-                </ul>
-                <div class="visual-animation">
-                    <div class="floating-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="floating-icon delay-1">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="floating-icon delay-2">
-                        <i class="fas fa-robot"></i>
-                    </div>
+        <!-- 사용자 유형 선택 -->
+        <div class="user-type-section">
+            <h3 style="margin-bottom: var(--space-md); color: var(--neutral-800);">어떤 분이신가요?</h3>
+            <div class="user-type-grid">
+                <div class="user-type-card" data-type="student">
+                    <div class="user-type-icon">👨‍🎓</div>
+                    <div class="user-type-title">학생</div>
+                    <div class="user-type-desc">직접 학습하는 학습자</div>
+                </div>
+                <div class="user-type-card" data-type="teacher">
+                    <div class="user-type-icon">👩‍🏫</div>
+                    <div class="user-type-title">교사</div>
+                    <div class="user-type-desc">학생을 지도하는 선생님</div>
+                </div>
+                <div class="user-type-card" data-type="parent">
+                    <div class="user-type-icon">👨‍👩‍👧‍👦</div>
+                    <div class="user-type-title">학부모</div>
+                    <div class="user-type-desc">자녀의 학습을 관리</div>
                 </div>
             </div>
+        </div>
+
+        <!-- 회원가입 폼 -->
+        <form id="signupForm" class="form-container">
+            <div class="form-group">
+                <label class="form-label" for="email">이메일</label>
+                <input type="email" id="email" class="form-input" placeholder="이메일을 입력하세요" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">비밀번호</label>
+                <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
+                <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div id="strengthText" style="margin-top: var(--space-xs);"></div>
+                </div>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="confirmPassword">비밀번호 확인</label>
+                <input type="password" id="confirmPassword" class="form-input" placeholder="비밀번호를 다시 입력하세요" required>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit" class="signup-btn">
+                <span class="btn-text">회원가입</span>
+                <span class="loading" style="display: none;"></span>
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <p>이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+            <p><a href="index.html">← 메인으로 돌아가기</a></p>
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signupForm');
+            const userTypeCards = document.querySelectorAll('.user-type-card');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const signupBtn = document.querySelector('.signup-btn');
+            const btnText = document.querySelector('.btn-text');
+            const loading = document.querySelector('.loading');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            let selectedUserType = '';
+
+            // 사용자 유형 선택
+            userTypeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    userTypeCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedUserType = this.dataset.type;
+                    clearErrors();
+                });
+            });
+
+            // 비밀번호 강도 체크
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                const strength = checkPasswordStrength(password);
+                updatePasswordStrength(strength);
+            });
+
+            // 폼 제출
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (!validateForm()) {
+                    return;
+                }
+                
+                setLoading(true);
+                
+                try {
+                    await performSignup();
+                } catch (error) {
+                    console.error('회원가입 오류:', error);
+                    showError('email', '회원가입에 실패했습니다. 다시 시도해주세요.');
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            // 폼 검증
+            function validateForm() {
+                clearErrors();
+                let isValid = true;
+
+                // 사용자 유형 선택 확인
+                if (!selectedUserType) {
+                    showToast('사용자 유형을 선택해주세요.', 'error');
+                    isValid = false;
+                }
+
+                // 이메일 검증
+                const email = emailInput.value.trim();
+                if (!email) {
+                    showError('email', '이메일을 입력해주세요.');
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    showError('email', '올바른 이메일 형식을 입력해주세요.');
+                    isValid = false;
+                }
+
+                // 비밀번호 검증
+                const password = passwordInput.value;
+                if (!password) {
+                    showError('password', '비밀번호를 입력해주세요.');
+                    isValid = false;
+                } else if (password.length < 6) {
+                    showError('password', '비밀번호는 최소 6자리 이상이어야 합니다.');
+                    isValid = false;
+                }
+
+                // 비밀번호 확인
+                const confirmPassword = confirmPasswordInput.value;
+                if (password !== confirmPassword) {
+                    showError('confirmPassword', '비밀번호가 일치하지 않습니다.');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            // 회원가입 수행
+            async function performSignup() {
+                const signupData = {
+                    email: emailInput.value.trim(),
+                    password: passwordInput.value,
+                    userType: selectedUserType
+                };
+
+                try {
+                    // 백엔드 API 호출
+                    const response = await fetch('/api/auth/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(signupData)
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        showToast('회원가입이 완료되었습니다!', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1500);
+                    } else {
+                        const errorData = await response.json();
+                        showError('email', errorData.message || '회원가입에 실패했습니다.');
+                    }
+                } catch (error) {
+                    // API 서버가 없는 경우 임시 처리
+                    console.warn('API 서버 연결 실패, 임시 회원가입 처리');
+                    
+                    // 로컬 스토리지에 임시 저장
+                    const users = JSON.parse(localStorage.getItem('tempUsers') || '[]');
+                    
+                    // 이메일 중복 체크
+                    if (users.find(user => user.email === signupData.email)) {
+                        showError('email', '이미 사용 중인 이메일입니다.');
+                        return;
+                    }
+                    
+                    users.push({
+                        ...signupData,
+                        id: Date.now(),
+                        createdAt: new Date().toISOString()
+                    });
+                    
+                    localStorage.setItem('tempUsers', JSON.stringify(users));
+                    
+                    showToast('회원가입이 완료되었습니다! (개발 모드)', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                }
+            }
+
+            // 이메일 유효성 검사
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // 비밀번호 강도 체크
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                if (password.length >= 6) strength++;
+                if (password.length >= 8) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                
+                return Math.min(strength, 3);
+            }
+
+            // 비밀번호 강도 UI 업데이트
+            function updatePasswordStrength(strength) {
+                const strengthTexts = ['', '약함', '보통', '강함'];
+                const strengthClasses = ['', 'strength-weak', 'strength-medium', 'strength-strong'];
+                
+                strengthFill.className = `strength-fill ${strengthClasses[strength]}`;
+                strengthFill.style.width = `${(strength / 3) * 100}%`;
+                strengthText.textContent = strengthTexts[strength];
+                strengthText.className = strengthClasses[strength];
+            }
+
+            // 에러 표시/제거
+            function showError(field, message) {
+                const errorElement = document.getElementById(field + 'Error');
+                const inputElement = document.getElementById(field);
+                
+                if (errorElement && inputElement) {
+                    errorElement.textContent = message;
+                    inputElement.classList.add('error');
+                }
+            }
+
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+            }
+
+            // 로딩 상태
+            function setLoading(isLoading) {
+                signupBtn.disabled = isLoading;
+                btnText.style.display = isLoading ? 'none' : 'inline';
+                loading.style.display = isLoading ? 'inline-block' : 'none';
+            }
+
+            // 토스트 메시지
+            function showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--info)'};
+                    color: white;
+                    padding: var(--space-md);
+                    border-radius: var(--radius-md);
+                    z-index: 1000;
+                    transform: translateX(400px);
+                    transition: transform var(--transition-base);
+                `;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(400px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            console.log('🎓 회원가입 페이지 로드 완료 - AI 학습도우미 예팸');
+        });
+    </script>
 </body>
 </html>
