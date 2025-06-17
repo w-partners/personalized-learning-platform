@@ -12,7 +12,7 @@ import os
 from datetime import datetime
 
 # 라우터 임포트
-from app.routers import students
+from app.routers import students, auth
 
 # FastAPI 앱 초기화
 app = FastAPI(
@@ -34,10 +34,11 @@ app.add_middleware(
 
 # 라우터 등록
 app.include_router(students.router, prefix="/api")
+app.include_router(auth.router, prefix="/api/auth")
 
 # 정적 파일 서빙 (프론트엔드용)
-if os.path.exists("static"):
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+if os.path.exists("frontend"):
+    app.mount("/frontend", StaticFiles(directory="frontend"), name="static")
 
 # 헬스체크 엔드포인트
 @app.get("/health")
@@ -48,7 +49,8 @@ async def health_check():
         "timestamp": datetime.now().isoformat(),
         "service": "개인화 AI 학습 플랫폼 MVP",
         "version": "0.1.0",
-        "database": "connected"  # 실제로는 DB 연결 확인 로직 필요
+        "database": "connected",  # 실제로는 DB 연결 확인 로직 필요
+        "auth": "enabled"
     }
 
 # 루트 엔드포인트
@@ -63,8 +65,13 @@ async def root():
         "api_base": "/api",
         "endpoints": {
             "students": "/api/students",
-            "register": "/api/students/register",
-            "search": "/api/students/"
+            "auth": "/api/auth",
+            "login": "/api/auth/login",
+            "test_accounts": "/api/auth/test-accounts"
+        },
+        "test_info": {
+            "accounts": "test1, test2, test3, test4, test5",
+            "password": "test123"
         }
     }
 
