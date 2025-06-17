@@ -1,0 +1,27 @@
+{
+  "name": "get_student_info",
+  "description": "학생의 개념별 이해도와 학습 현황을 조회하여 개인화된 학습 지침을 생성합니다",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "student_code": {
+        "type": "string",
+        "description": "학생 고유 코드 또는 ID"
+      },
+      "request_type": {
+        "type": "string",
+        "enum": ["instruction", "problem_generation", "progress_analysis"],
+        "description": "요청 유형: instruction(학습지침), problem_generation(문제생성), progress_analysis(진도분석)"
+      },
+      "subject": {
+        "type": "string",
+        "description": "과목명 (예: 수학, 영어, 과학)"
+      },
+      "concept": {
+        "type": "string",
+        "description": "특정 개념명 (선택사항)"
+      }
+    },
+    "required": ["student_code", "request_type"]
+  }
+}

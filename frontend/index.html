@@ -3,245 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인화 AI 학습 플랫폼 MVP</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>학습 플랫폼 - 2025</title>
+    <meta name="description" content="효과적인 학습을 위한 개인화된 교육 플랫폼">
+    
+    <!-- Pretendard 폰트 -->
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+    
+    <!-- 스타일시트 -->
+    <link rel="stylesheet" href="css/modern-style.css">
+    
+    <style>
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-purple) 100%);
+            color: white;
+            padding: var(--space-2xl) 0;
+            text-align: center;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: var(--space-lg);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        /* 기능 카드들 */
+        .features {
+            padding: var(--space-2xl) 0;
+            background: var(--neutral-50);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: var(--space-xl);
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-lg);
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* 헤더 */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-lg) 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        /* CTA 섹션 */
+        .cta-section {
+            background: linear-gradient(45deg, var(--neutral-100) 0%, white 100%);
+            padding: var(--space-2xl) 0;
+            text-align: center;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: var(--neutral-800);
+            color: white;
+            padding: var(--space-xl) 0;
+            text-align: center;
+        }
+        
+        .footer p {
+            color: var(--neutral-300);
+        }
+        
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+            
+            .nav-buttons {
+                width: 100%;
+            }
+            
+            .nav-buttons .btn {
+                flex: 1;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 헤더 -->
     <header class="header">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-brain"></i>
-                <h1>AI 학습 플랫폼</h1>
+        <nav class="container">
+            <div class="nav">
+                <h2 class="mb-0">🎓 학습플랫폼</h2>
+                <div class="nav-buttons">
+                    <a href="login.html" class="btn btn-outline">로그인</a>
+                    <a href="signup.html" class="btn btn-primary">회원가입</a>
+                </div>
             </div>
-            <nav class="nav">
-                <a href="#home" class="nav-link active">홈</a>
-                <a href="#features" class="nav-link">기능</a>
-                <a href="#demo" class="nav-link">데모</a>
-                <a href="#api" class="nav-link">API</a>
-            </nav>
-        </div>
+        </nav>
     </header>
 
-    <!-- 메인 섹션 -->
-    <main>
-        <!-- 히어로 섹션 -->
-        <section id="home" class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h2 class="hero-title">
-                        개인화 AI 학습 플랫폼
-                        <span class="highlight">MVP</span>
-                    </h2>
-                    <p class="hero-description">
-                        ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해 상태에 따라<br>
-                        자동으로 문제를 생성하고 반복 학습을 유도하는 AI 기반 시스템
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('demo')">
-                            <i class="fas fa-play"></i> 데모 체험
-                        </button>
-                        <button class="btn btn-secondary" onclick="openAPI()">
-                            <i class="fas fa-code"></i> API 문서
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="floating-card">
-                        <i class="fas fa-chart-line"></i>
-                        <h4>실시간 성취도 분석</h4>
-                    </div>
-                    <div class="floating-card delay-1">
-                        <i class="fas fa-robot"></i>
-                        <h4>AI 문제 생성</h4>
-                    </div>
-                    <div class="floating-card delay-2">
-                        <i class="fas fa-users"></i>
-                        <h4>개인화 학습</h4>
-                    </div>
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="container">
+            <div class="animate-fade-in">
+                <h1>개인화된 AI 학습 경험</h1>
+                <p>ChatGPT와 연동된 지능형 학습 시스템으로<br>개념별 이해도 분석과 맞춤 학습을 시작하세요</p>
+                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                    <a href="signup.html" class="btn btn-success" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl);">
+                        🚀 학습 시작하기
+                    </a>
+                    <a href="login.html" class="btn btn-outline" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl); background: rgba(255,255,255,0.1); border-color: white; color: white;">
+                        👨‍💼 관리자 로그인
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 기능 섹션 -->
-        <section id="features" class="features">
-            <div class="container">
-                <h2 class="section-title">핵심 기능</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <h3>학생 관리</h3>
-                        <p>개별 학생의 정보와 학습 진도를 체계적으로 관리합니다.</p>
-                        <ul>
-                            <li>학생코드 기반 관리</li>
-                            <li>개념별 이해도 추적</li>
-                            <li>학습 히스토리 기록</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>AI 문제 생성</h3>
-                        <p>ChatGPT를 활용하여 개인 맞춤형 문제를 자동 생성합니다.</p>
-                        <ul>
-                            <li>개념별 난이도 조절</li>
-                            <li>약점 보완 문제</li>
-                            <li>PDF 문서 자동 생성</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <h3>성취도 분석</h3>
-                        <p>학습 데이터를 분석하여 개인별 성취도를 평가합니다.</p>
-                        <ul>
-                            <li>개념별 이해도 1-5단계</li>
-                            <li>약점/강점 분석</li>
-                            <li>학습 방향 제시</li>
-                        </ul>
-                    </div>
+    <!-- 주요 기능 -->
+    <section class="features">
+        <div class="container">
+            <div class="text-center">
+                <h2>혁신적인 학습 기능</h2>
+                <p style="font-size: 1.1rem; color: var(--neutral-600);">2025년 최신 AI 기술로 학습 효과를 극대화하세요</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI 개념별 분석</h3>
+                    <p>ChatGPT 기반 지능형 시스템이 학습자의 개념별 이해 수준을 정밀 분석하고 개인화된 피드백을 제공합니다.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>맞춤형 학습 경로</h3>
+                    <p>개인의 학습 패턴과 강약점을 분석하여 최적화된 학습 경로와 난이도를 자동으로 조정합니다.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>실시간 진도 대시보드</h3>
+                    <p>학습 진도와 성취도를 실시간으로 시각화하여 모니터링하고 동기 부여를 위한 성과 지표를 제공합니다.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>ChatGPT 연동 학습</h3>
+                    <p>개인 맞춤 문제 생성, 학습 지침 제공, 질의응답 지원으로 AI가 함께하는 스마트 학습을 경험하세요.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>크로스 플랫폼 지원</h3>
+                    <p>PC, 태블릿, 모바일 어디서나 끊김없는 학습 경험과 클라우드 동기화를 제공합니다.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>고급 분석 도구</h3>
+                    <p>학습 데이터 분석을 통한 인사이트 제공과 관리자를 위한 통합 대시보드로 효율적인 학습 관리가 가능합니다.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 데모 섹션 -->
-        <section id="demo" class="demo">
-            <div class="container">
-                <h2 class="section-title">라이브 데모</h2>
-                <div class="demo-container">
-                    <!-- 학생 등록 -->
-                    <div class="demo-section">
-                        <h3><i class="fas fa-user-plus"></i> 학생 등록</h3>
-                        <form id="studentForm" class="form">
-                            <div class="form-group">
-                                <label for="studentCode">학생코드</label>
-                                <input type="text" id="studentCode" placeholder="2025SE00130201" maxlength="14">
-                                <small>형식: 년도+지역+학교+학년+반+번호</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="studentName">이름</label>
-                                <input type="text" id="studentName" placeholder="김철수">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="grade">학년</label>
-                                    <select id="grade">
-                                        <option value="1">1학년</option>
-                                        <option value="2">2학년</option>
-                                        <option value="3" selected>3학년</option>
-                                        <option value="4">4학년</option>
-                                        <option value="5">5학년</option>
-                                        <option value="6">6학년</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="school">학교</label>
-                                    <input type="text" id="school" placeholder="서울초등학교">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="parentEmail">보호자 이메일</label>
-                                <input type="email" id="parentEmail" placeholder="parent@example.com">
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> 학생 등록
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- 개념 점수 관리 -->
-                    <div class="demo-section">
-                        <h3><i class="fas fa-chart-line"></i> 개념별 이해도</h3>
-                        <div id="conceptsContainer">
-                            <div class="concept-item">
-                                <label>분수의 덧셈</label>
-                                <div class="score-selector">
-                                    <input type="range" min="1" max="5" value="3" data-concept="분수의덧셈">
-                                    <span class="score-value">3</span>
-                                </div>
-                            </div>
-                            <div class="concept-item">
-                                <label>소수의 곱셈</label>
-                                <div class="score-selector">
-                                    <input type="range" min="1" max="5" value="4" data-concept="소수의곱셈">
-                                    <span class="score-value">4</span>
-                                </div>
-                            </div>
-                            <div class="concept-item">
-                                <label>도형의 넓이</label>
-                                <div class="score-selector">
-                                    <input type="range" min="1" max="5" value="2" data-concept="도형의넓이">
-                                    <span class="score-value">2</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="updateConcepts()">
-                            <i class="fas fa-sync"></i> 점수 업데이트
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 결과 표시 -->
-                <div id="demoResults" class="demo-results">
-                    <h3><i class="fas fa-clipboard-list"></i> 실행 결과</h3>
-                    <div id="resultContent" class="result-content">
-                        <p>학생을 등록하거나 개념 점수를 업데이트해보세요!</p>
-                    </div>
-                </div>
+    <!-- Call to Action -->    
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="color: var(--neutral-900);">지금 바로 시작하세요</h2>
+            <p style="font-size: 1.1rem; margin-bottom: var(--space-xl); color: var(--neutral-600);">
+                AI 기반 개인화 학습으로 새로운 차원의 교육 경험을 만나보세요
+            </p>
+            <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                <a href="signup.html" class="btn btn-primary" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl);">
+                    ✨ 무료로 시작하기
+                </a>
+                <a href="#features" class="btn btn-outline" style="font-size: 1.1rem; padding: var(--space-md) var(--space-xl);">
+                    📋 더 자세히 알아보기
+                </a>
             </div>
-        </section>
-
-        <!-- API 정보 섹션 -->
-        <section id="api" class="api-section">
-            <div class="container">
-                <h2 class="section-title">API 정보</h2>
-                <div class="api-grid">
-                    <div class="api-card">
-                        <h3>시스템 상태</h3>
-                        <div class="api-status" id="apiStatus">
-                            <i class="fas fa-spinner fa-spin"></i> 확인 중...
-                        </div>
-                        <div class="api-links">
-                            <a href="/health" target="_blank" class="api-link">
-                                <i class="fas fa-heartbeat"></i> Health Check
-                            </a>
-                            <a href="/api/docs" target="_blank" class="api-link">
-                                <i class="fas fa-book"></i> API 문서
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="api-card">
-                        <h3>기술 스택</h3>
-                        <div class="tech-stack">
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">ChatGPT</span>
-                            <span class="tech-tag">Nginx</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- 푸터 -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 개인화 AI 학습 플랫폼 MVP. All rights reserved.</p>
-            <p>Built with ❤️ and AI</p>
+            <p style="font-size: 1.1rem; margin-bottom: var(--space-sm);">&copy; 2025 AI 학습플랫폼. 모든 권리 보유.</p>
+            <p style="font-size: 0.9rem;">효과적인 학습을 위한 차세대 AI 교육 솔루션</p>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- JavaScript -->
+    <script>
+        // 페이지 로드 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            // 기능 카드 순차 애니메이션
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+            
+            featureCards.forEach((card) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+            
+            // 부드러운 스크롤
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            console.log('🎓 메인 페이지 로드 완료 - 2025 AI 학습플랫폼');
+        });
+    </script>
 </body>
 </html>

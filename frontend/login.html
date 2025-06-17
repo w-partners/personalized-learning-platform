@@ -100,3 +100,362 @@
     <script src="js/auth.js"></script>
 </body>
 </html>
+            font-weight: 500;
+        }
+        
+        .user-type-btn.active {
+            background: white;
+            color: var(--primary-blue);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .form-container {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--neutral-800);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--space-md);
+            font-size: 1rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: var(--space-xs);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: var(--space-md);
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #357ABD 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-links {
+            text-align: center;
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--neutral-200);
+        }
+        
+        .auth-links a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .demo-info {
+            background: var(--neutral-100);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-lg);
+            font-size: 0.9rem;
+            color: var(--neutral-600);
+        }
+        
+        .demo-info strong {
+            color: var(--neutral-800);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo">
+                <div class="logo-icon">🧠</div>
+                <div>
+                    <h1 class="auth-title">AI 학습플랫폼</h1>
+                    <p class="auth-subtitle">로그인하여 개인화 학습을 시작하세요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 사용자 유형 선택 -->
+        <div class="user-type-selector">
+            <button type="button" class="user-type-btn active" data-type="student">
+                👨‍🎓 학생
+            </button>
+            <button type="button" class="user-type-btn" data-type="admin">
+                👨‍💼 관리자
+            </button>
+        </div>
+
+        <!-- 데모 정보 -->
+        <div class="demo-info">
+            <strong>데모 계정:</strong><br>
+            관리자: admin / admin<br>
+            학생: 회원가입 후 사용
+        </div>
+
+        <!-- 로그인 폼 -->
+        <form id="loginForm" class="form-container">
+            <div class="form-group">
+                <label class="form-label" for="username">사용자명</label>
+                <input type="text" id="username" class="form-input" placeholder="사용자명을 입력하세요" required>
+                <div class="error-message" id="usernameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">비밀번호</label>
+                <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span class="btn-text">로그인</span>
+                <span class="loading" style="display: none;"></span>
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <p>계정이 없으신가요? <a href="signup.html">회원가입</a></p>
+            <p><a href="index.html">← 메인으로 돌아가기</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const userTypeButtons = document.querySelectorAll('.user-type-btn');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.querySelector('.login-btn');
+            const btnText = document.querySelector('.btn-text');
+            const loading = document.querySelector('.loading');
+            
+            let currentUserType = 'student';
+
+            // 사용자 유형 선택
+            userTypeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    userTypeButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentUserType = this.dataset.type;
+                    
+                    // 관리자 선택 시 자동 입력
+                    if (currentUserType === 'admin') {
+                        usernameInput.value = 'admin';
+                        passwordInput.value = 'admin';
+                    } else {
+                        usernameInput.value = '';
+                        passwordInput.value = '';
+                    }
+                    
+                    clearErrors();
+                });
+            });
+
+            // 폼 제출
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                // 기본 검증
+                if (!username || !password) {
+                    showError('username', '사용자명과 비밀번호를 입력해주세요.');
+                    return;
+                }
+                
+                // 로딩 상태
+                setLoading(true);
+                clearErrors();
+                
+                try {
+                    await performLogin(username, password, currentUserType);
+                } catch (error) {
+                    console.error('로그인 오류:', error);
+                    showError('username', '로그인에 실패했습니다. 다시 시도해주세요.');
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            // 로그인 수행
+            async function performLogin(username, password, userType) {
+                // 관리자 로그인 체크
+                if (userType === 'admin') {
+                    if (username === 'admin' && password === 'admin') {
+                        localStorage.setItem('authToken', 'admin-token-' + Date.now());
+                        localStorage.setItem('userType', 'admin');
+                        localStorage.setItem('username', 'admin');
+                        
+                        showToast('관리자 로그인 성공!', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'admin.html';
+                        }, 1000);
+                        return;
+                    } else {
+                        showError('username', '관리자 계정이 올바르지 않습니다.');
+                        return;
+                    }
+                }
+                
+                // 학생 로그인 (백엔드 API 호출)
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        localStorage.setItem('authToken', data.token);
+                        localStorage.setItem('userType', 'student');
+                        localStorage.setItem('username', username);
+                        
+                        showToast('로그인 성공!', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'student.html';
+                        }, 1000);
+                    } else {
+                        const errorData = await response.json();
+                        showError('username', errorData.message || '로그인에 실패했습니다.');
+                    }
+                } catch (error) {
+                    // API 서버가 없는 경우 임시 로그인
+                    console.warn('API 서버 연결 실패, 임시 로그인 처리');
+                    
+                    localStorage.setItem('authToken', 'student-token-' + Date.now());
+                    localStorage.setItem('userType', 'student');
+                    localStorage.setItem('username', username);
+                    
+                    showToast('로그인 성공! (개발 모드)', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'student.html';
+                    }, 1000);
+                }
+            }
+
+            // 에러 표시
+            function showError(field, message) {
+                const errorElement = document.getElementById(field + 'Error');
+                const inputElement = document.getElementById(field);
+                
+                if (errorElement && inputElement) {
+                    errorElement.textContent = message;
+                    inputElement.classList.add('error');
+                }
+            }
+
+            // 에러 제거
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+            }
+
+            // 로딩 상태 설정
+            function setLoading(isLoading) {
+                loginBtn.disabled = isLoading;
+                btnText.style.display = isLoading ? 'none' : 'inline';
+                loading.style.display = isLoading ? 'inline-block' : 'none';
+            }
+
+            // 토스트 메시지
+            function showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--info)'};
+                    color: white;
+                    padding: var(--space-md);
+                    border-radius: var(--radius-md);
+                    z-index: 1000;
+                    transform: translateX(400px);
+                    transition: transform var(--transition-base);
+                `;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(400px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            console.log('🔐 로그인 페이지 로드 완료');
+        });
+    </script>
+</body>
+</html>

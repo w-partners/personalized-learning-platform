@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인화 AI 학습 플랫폼 MVP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>AI 학습 플랫폼</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">홈</a>
+                <a href="#features" class="nav-link">기능</a>
+                <a href="#demo" class="nav-link">데모</a>
+                <a href="#api" class="nav-link">API</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 섹션 -->
+    <main>
+        <!-- 히어로 섹션 -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title">
+                        개인화 AI 학습 플랫폼
+                        <span class="highlight">MVP</span>
+                    </h2>
+                    <p class="hero-description">
+                        ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해 상태에 따라<br>
+                        자동으로 문제를 생성하고 반복 학습을 유도하는 AI 기반 시스템
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="scrollToSection('demo')">
+                            <i class="fas fa-play"></i> 데모 체험
+                        </button>
+                        <button class="btn btn-secondary" onclick="openAPI()">
+                            <i class="fas fa-code"></i> API 문서
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>실시간 성취도 분석</h4>
+                    </div>
+                    <div class="floating-card delay-1">
+                        <i class="fas fa-robot"></i>
+                        <h4>AI 문제 생성</h4>
+                    </div>
+                    <div class="floating-card delay-2">
+                        <i class="fas fa-users"></i>
+                        <h4>개인화 학습</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 기능 섹션 -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">핵심 기능</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>학생 관리</h3>
+                        <p>개별 학생의 정보와 학습 진도를 체계적으로 관리합니다.</p>
+                        <ul>
+                            <li>학생코드 기반 관리</li>
+                            <li>개념별 이해도 추적</li>
+                            <li>학습 히스토리 기록</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI 문제 생성</h3>
+                        <p>ChatGPT를 활용하여 개인 맞춤형 문제를 자동 생성합니다.</p>
+                        <ul>
+                            <li>개념별 난이도 조절</li>
+                            <li>약점 보완 문제</li>
+                            <li>PDF 문서 자동 생성</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>성취도 분석</h3>
+                        <p>학습 데이터를 분석하여 개인별 성취도를 평가합니다.</p>
+                        <ul>
+                            <li>개념별 이해도 1-5단계</li>
+                            <li>약점/강점 분석</li>
+                            <li>학습 방향 제시</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 데모 섹션 -->
+        <section id="demo" class="demo">
+            <div class="container">
+                <h2 class="section-title">라이브 데모</h2>
+                <div class="demo-container">
+                    <!-- 학생 등록 -->
+                    <div class="demo-section">
+                        <h3><i class="fas fa-user-plus"></i> 학생 등록</h3>
+                        <form id="studentForm" class="form">
+                            <div class="form-group">
+                                <label for="studentCode">학생코드</label>
+                                <input type="text" id="studentCode" placeholder="2025SE00130201" maxlength="14">
+                                <small>형식: 년도+지역+학교+학년+반+번호</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentName">이름</label>
+                                <input type="text" id="studentName" placeholder="김철수">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="grade">학년</label>
+                                    <select id="grade">
+                                        <option value="1">1학년</option>
+                                        <option value="2">2학년</option>
+                                        <option value="3" selected>3학년</option>
+                                        <option value="4">4학년</option>
+                                        <option value="5">5학년</option>
+                                        <option value="6">6학년</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="school">학교</label>
+                                    <input type="text" id="school" placeholder="서울초등학교">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="parentEmail">보호자 이메일</label>
+                                <input type="email" id="parentEmail" placeholder="parent@example.com">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 학생 등록
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- 개념 점수 관리 -->
+                    <div class="demo-section">
+                        <h3><i class="fas fa-chart-line"></i> 개념별 이해도</h3>
+                        <div id="conceptsContainer">
+                            <div class="concept-item">
+                                <label>분수의 덧셈</label>
+                                <div class="score-selector">
+                                    <input type="range" min="1" max="5" value="3" data-concept="분수의덧셈">
+                                    <span class="score-value">3</span>
+                                </div>
+                            </div>
+                            <div class="concept-item">
+                                <label>소수의 곱셈</label>
+                                <div class="score-selector">
+                                    <input type="range" min="1" max="5" value="4" data-concept="소수의곱셈">
+                                    <span class="score-value">4</span>
+                                </div>
+                            </div>
+                            <div class="concept-item">
+                                <label>도형의 넓이</label>
+                                <div class="score-selector">
+                                    <input type="range" min="1" max="5" value="2" data-concept="도형의넓이">
+                                    <span class="score-value">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="updateConcepts()">
+                            <i class="fas fa-sync"></i> 점수 업데이트
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 결과 표시 -->
+                <div id="demoResults" class="demo-results">
+                    <h3><i class="fas fa-clipboard-list"></i> 실행 결과</h3>
+                    <div id="resultContent" class="result-content">
+                        <p>학생을 등록하거나 개념 점수를 업데이트해보세요!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API 정보 섹션 -->
+        <section id="api" class="api-section">
+            <div class="container">
+                <h2 class="section-title">API 정보</h2>
+                <div class="api-grid">
+                    <div class="api-card">
+                        <h3>시스템 상태</h3>
+                        <div class="api-status" id="apiStatus">
+                            <i class="fas fa-spinner fa-spin"></i> 확인 중...
+                        </div>
+                        <div class="api-links">
+                            <a href="/health" target="_blank" class="api-link">
+                                <i class="fas fa-heartbeat"></i> Health Check
+                            </a>
+                            <a href="/api/docs" target="_blank" class="api-link">
+                                <i class="fas fa-book"></i> API 문서
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card">
+                        <h3>기술 스택</h3>
+                        <div class="tech-stack">
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">ChatGPT</span>
+                            <span class="tech-tag">Nginx</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 개인화 AI 학습 플랫폼 MVP. All rights reserved.</p>
+            <p>Built with ❤️ and AI</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
