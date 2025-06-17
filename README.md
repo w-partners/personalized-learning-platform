@@ -291,3 +291,16 @@ ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해
   5. 다음 작업: execute_task taskId="42ed5c17-449e-4d66-a30e-564d54441b51" (ChatGPT Webhook)
 - **완료 상태**: 학생 학습 페이지 100% 구현, 가상 데이터 테스트 환경 완비
 - **다음 우선순위**: ChatGPT Custom Function 연동 Webhook 구현 → API 통합 → Docker 배포
+
+
+### 2025-06-17 20:13
+🔐 **학생 로그인 기능 추가**
+- **데모 계정**: student / student123 (김민준 학생)
+- **로그인 페이지**: login.html에 학생 계정 정보 추가
+- **자동 로그인**: student-demo.html에서 원클릭 로그인
+- **편의 기능**: 더블클릭 자동완성, 플레이스홀더 힌트
+- **연동**: 로그인 시 자동으로 데모 데이터 로드
+- **접속 방법**: 
+  1. http://서버IP:8080/student-demo.html (자동 로그인)
+  2. http://서버IP:8080/login.html (수동 로그인: student/student123)
+- **로그인 후**: 학생 대시보드로 자동 이동, 전체 기능 이용 가능
