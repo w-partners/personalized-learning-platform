@@ -4,240 +4,601 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 대시보드 - AI 학습 플랫폼</title>
-    <link rel="stylesheet" href="css/admin.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #f8fafc;
+            color: #2d3748;
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 32px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        
+        .sidebar-nav {
+            padding: 24px 0;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 16px 24px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(8px);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            padding: 24px 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h2 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logout-btn {
+            padding: 12px 20px;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #c53030;
+            transform: translateY(-1px);
+        }
+        
+        .content {
+            padding: 32px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .stat-title {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        
+        .stat-change {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        
+        .positive { color: #38a169; }
+        .negative { color: #e53e3e; }
+        
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+        
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .students-table th,
+        .students-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .students-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 48px;
+            color: #718096;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .header {
+                padding: 16px 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="admin-container">
-        <!-- 사이드바 -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <i class="fas fa-brain"></i>
-                    <h1>Admin</h1>
+    <!-- 사이드바 -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>🎓 AI 학습 플랫폼</h1>
+            <p>관리자 대시보드</p>
+        </div>
+        
+        <div class="sidebar-nav">
+            <button class="nav-item active" data-section="dashboard">
+                <i>📊</i> 대시보드
+            </button>
+            <button class="nav-item" data-section="students">
+                <i>👥</i> 학생 관리
+            </button>
+            <button class="nav-item" data-section="analytics">
+                <i>📈</i> 학습 분석
+            </button>
+            <button class="nav-item" data-section="settings">
+                <i>⚙️</i> 시스템 설정
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+        <!-- 헤더 -->
+        <header class="header">
+            <h2 id="pageTitle">대시보드</h2>
+            <div class="user-menu">
+                <span>👨‍💼 관리자</span>
+                <button class="logout-btn" onclick="logout()">로그아웃</button>
+            </div>
+        </header>
+        
+        <!-- 컨텐츠 영역 -->
+        <div class="content">
+            <!-- 대시보드 섹션 -->
+            <div id="dashboard-section" class="content-section">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">총 학생 수</span>
+                            <div class="stat-icon" style="background: #667eea;">👥</div>
+                        </div>
+                        <div class="stat-value" id="totalStudents">-</div>
+                        <div class="stat-change positive">전월 대비 +12%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">활성 사용자</span>
+                            <div class="stat-icon" style="background: #38a169;">✅</div>
+                        </div>
+                        <div class="stat-value" id="activeUsers">-</div>
+                        <div class="stat-change positive">이번 주 +8%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">평균 학습 시간</span>
+                            <div class="stat-icon" style="background: #ed8936;">⏱️</div>
+                        </div>
+                        <div class="stat-value">2.4시간</div>
+                        <div class="stat-change positive">전일 대비 +15분</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">완료율</span>
+                            <div class="stat-icon" style="background: #9f7aea;">🎯</div>
+                        </div>
+                        <div class="stat-value">87%</div>
+                        <div class="stat-change positive">전월 대비 +3%</div>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="section-title">최근 등록 학생</h3>
+                    <div id="recentStudents" class="loading">데이터를 불러오는 중...</div>
                 </div>
             </div>
             
-            <nav class="sidebar-nav">
-                <ul>
-                    <li class="active">
-                        <a href="#dashboard" data-section="dashboard">
-                            <i class="fas fa-chart-pie"></i>
-                            <span>대시보드</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#students" data-section="students">
-                            <i class="fas fa-users"></i>
-                            <span>학생 관리</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#teachers" data-section="teachers">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <span>교사 관리</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#analytics" data-section="analytics">
-                            <i class="fas fa-chart-line"></i>
-                            <span>학습 분석</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#api" data-section="api">
-                            <i class="fas fa-code"></i>
-                            <span>API 관리</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#settings" data-section="settings">
-                            <i class="fas fa-cog"></i>
-                            <span>시스템 설정</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- 메인 컨텐츠 -->
-        <main class="main-content">
-            <!-- 헤더 -->
-            <header class="main-header">
-                <div class="header-left">
-                    <button class="sidebar-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h2 id="pageTitle">대시보드</h2>
-                </div>
-                <div class="header-right">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="검색...">
-                    </div>
-                    <div class="user-menu">
-                        <span>관리자님</span>
-                        <button class="logout-btn" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            <!-- 대시보드 섹션 -->
-            <section id="dashboard" class="content-section active">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="totalStudents">0</h3>
-                            <p>전체 학생</p>
-                            <span class="stat-change positive">+12%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3>85%</h3>
-                            <p>평균 이해도</p>
-                            <span class="stat-change positive">+5%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3>1,247</h3>
-                            <p>AI 문제 생성</p>
-                            <span class="stat-change positive">+23%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3>24/7</h3>
-                            <p>시스템 가동률</p>
-                            <span class="stat-change positive">99.9%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-grid">
-                    <div class="chart-card">
-                        <h3>학습 진도 현황</h3>
-                        <div class="chart-placeholder">
-                            <canvas id="progressChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="recent-activity">
-                        <h3>최근 활동</h3>
-                        <div class="activity-list" id="activityList">
-                            <!-- 동적으로 채워짐 -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- 학생 관리 섹션 -->
-            <section id="students" class="content-section">
+            <div id="students-section" class="content-section hidden">
                 <div class="section-header">
-                    <h3>학생 관리</h3>
-                    <button class="btn btn-primary" onclick="openAddStudentModal()">
-                        <i class="fas fa-plus"></i> 학생 추가
-                    </button>
+                    <h3 class="section-title">학생 관리</h3>
+                    <a href="student-register.html" class="btn btn-primary">
+                        ➕ 새 학생 등록
+                    </a>
                 </div>
-
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>학생코드</th>
-                                <th>이름</th>
-                                <th>학년</th>
-                                <th>학교</th>
-                                <th>평균 이해도</th>
-                                <th>등록일</th>
-                                <th>작업</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTable">
-                            <!-- 동적으로 채워짐 -->
-                        </tbody>
-                    </table>
+                <div id="studentsTable" class="loading">학생 목록을 불러오는 중...</div>
+            </div>
+            
+            <!-- 학습 분석 섹션 -->
+            <div id="analytics-section" class="content-section hidden">
+                <h3 class="section-title">학습 분석</h3>
+                <p>학습 패턴 분석 및 통계 차트가 여기에 표시됩니다.</p>
+                <div style="height: 400px; background: #f7fafc; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #718096;">
+                    📊 차트 영역 (Chart.js 구현 예정)
                 </div>
-            </section>
-
-            <!-- API 관리 섹션 -->
-            <section id="api" class="content-section">
-                <div class="api-status">
-                    <h3>API 상태</h3>
-                    <div class="status-grid">
-                        <div class="status-item">
-                            <span class="status-indicator online"></span>
-                            <span>학생 API</span>
-                            <span class="status-text">정상</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-indicator online"></span>
-                            <span>ChatGPT API</span>
-                            <span class="status-text">정상</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-indicator online"></span>
-                            <span>Database</span>
-                            <span class="status-text">연결됨</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="api-tools">
-                    <h3>API 도구</h3>
-                    <div class="tool-buttons">
-                        <button class="btn btn-secondary" onclick="testAPI()">
-                            <i class="fas fa-play"></i> API 테스트
-                        </button>
-                        <button class="btn btn-secondary" onclick="openAPIDoc()">
-                            <i class="fas fa-book"></i> API 문서
-                        </button>
-                        <button class="btn btn-secondary" onclick="exportData()">
-                            <i class="fas fa-download"></i> 데이터 내보내기
-                        </button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- 로그인 모달 -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h3>관리자 로그인</h3>
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label for="adminId">관리자 ID</label>
-                    <input type="text" id="adminId" placeholder="admin" required>
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">비밀번호</label>
-                    <input type="password" id="adminPassword" placeholder="admin" required>
-                </div>
-                <button type="submit" class="btn btn-primary">로그인</button>
-            </form>
+            </div>
+            
+            <!-- 시스템 설정 섹션 -->
+            <div id="settings-section" class="content-section hidden">
+                <h3 class="section-title">시스템 설정</h3>
+                <p>시스템 설정 및 환경 구성 옵션이 여기에 표시됩니다.</p>
+            </div>
         </div>
-    </div>
-
-    <script src="js/admin.js"></script>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 네비게이션 처리
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('[id$="-section"]');
+            const pageTitle = document.getElementById('pageTitle');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const sectionName = this.dataset.section;
+                    
+                    // 네비게이션 활성화 상태 변경
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 섹션 표시/숨김
+                    sections.forEach(section => section.classList.add('hidden'));
+                    const targetSection = document.getElementById(sectionName + '-section');
+                    if (targetSection) {
+                        targetSection.classList.remove('hidden');
+                    }
+                    
+                    // 페이지 제목 변경
+                    const titles = {
+                        dashboard: '대시보드',
+                        students: '학생 관리', 
+                        analytics: '학습 분석',
+                        settings: '시스템 설정'
+                    };
+                    pageTitle.textContent = titles[sectionName] || '대시보드';
+                    
+                    // 섹션별 데이터 로드
+                    if (sectionName === 'students') {
+                        loadStudents();
+                    }
+                });
+            });
+            
+            // 초기 데이터 로드
+            loadDashboardData();
+            
+            console.log('🎛️ 관리자 대시보드 로드 완료');
+        });
+        
+        // 대시보드 데이터 로드
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('/api/students/list');
+                if (response.ok) {
+                    const students = await response.json();
+                    
+                    // 통계 업데이트
+                    document.getElementById('totalStudents').textContent = students.length;
+                    document.getElementById('activeUsers').textContent = Math.floor(students.length * 0.8);
+                    
+                    // 최근 학생 목록 표시
+                    displayRecentStudents(students.slice(0, 5));
+                }
+            } catch (error) {
+                console.error('데이터 로드 실패:', error);
+                document.getElementById('recentStudents').innerHTML = '<p style="color: #e53e3e;">데이터 로드에 실패했습니다.</p>';
+            }
+        }
+        
+        // 최근 학생 표시
+        function displayRecentStudents(students) {
+            const container = document.getElementById('recentStudents');
+            
+            if (students.length === 0) {
+                container.innerHTML = '<p style="color: #718096;">등록된 학생이 없습니다.</p>';
+                return;
+            }
+            
+            const html = students.map(student => `
+                <div style="display: flex; align-items: center; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px;">
+                    <div class="student-avatar">${student.name.charAt(0)}</div>
+                    <div style="margin-left: 16px; flex: 1;">
+                        <div style="font-weight: 600;">${student.name}</div>
+                        <div style="font-size: 14px; color: #718096;">${student.grade}학년 • ${student.school || '학교 정보 없음'}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 14px; color: #4a5568;">학습 진도</div>
+                        <div style="margin-top: 4px;">
+                            <div class="progress-bar" style="width: 100px;">
+                                <div class="progress-fill" style="width: ${Math.random() * 100}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+        }
+        
+        // 학생 목록 로드
+        async function loadStudents() {
+            const container = document.getElementById('studentsTable');
+            
+            try {
+                const response = await fetch('/api/students/list');
+                if (response.ok) {
+                    const students = await response.json();
+                    displayStudentsTable(students);
+                } else {
+                    container.innerHTML = '<p style="color: #e53e3e;">학생 목록을 불러오는데 실패했습니다.</p>';
+                }
+            } catch (error) {
+                console.error('학생 목록 로드 실패:', error);
+                container.innerHTML = '<p style="color: #e53e3e;">서버 연결에 실패했습니다.</p>';
+            }
+        }
+        
+        // 학생 테이블 표시
+        function displayStudentsTable(students) {
+            const container = document.getElementById('studentsTable');
+            
+            if (students.length === 0) {
+                container.innerHTML = '<p style="color: #718096; text-align: center; padding: 48px;">등록된 학생이 없습니다.</p>';
+                return;
+            }
+            
+            const html = `
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th>학생</th>
+                            <th>학년</th>
+                            <th>학교</th>
+                            <th>등록일</th>
+                            <th>학습 진도</th>
+                            <th>작업</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${students.map(student => `
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="student-avatar">${student.name.charAt(0)}</div>
+                                        <div style="margin-left: 12px;">
+                                            <div style="font-weight: 600;">${student.name}</div>
+                                            <div style="font-size: 14px; color: #718096;">${student.student_code}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${student.grade}학년</td>
+                                <td>${student.school || '-'}</td>
+                                <td>${new Date(student.created_at).toLocaleDateString('ko-KR')}</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${Math.random() * 100}%;"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="viewStudent('${student.student_code}')" style="padding: 8px 16px; font-size: 14px;">
+                                        상세보기
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        // 학생 상세보기
+        function viewStudent(studentCode) {
+            alert(`학생 ${studentCode}의 상세 정보를 표시합니다. (추후 구현)`);
+        }
+        
+        // 로그아웃
+        function logout() {
+            if (confirm('정말 로그아웃하시겠습니까?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userType');
+                localStorage.removeItem('username');
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // 인증 확인
+        if (!localStorage.getItem('authToken') || localStorage.getItem('userType') !== 'admin') {
+            alert('관리자 권한이 필요합니다.');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
