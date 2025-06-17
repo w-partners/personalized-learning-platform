@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생 페이지 데모 - 개인화 AI 학습 플랫폼</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .demo-info {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #3182ce;
+        }
+        .demo-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .demo-btn {
+            padding: 15px 20px;
+            background: #3182ce;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .demo-btn:hover {
+            background: #2c5aa0;
+        }
+        .demo-btn.secondary {
+            background: #38a169;
+        }
+        .demo-btn.secondary:hover {
+            background: #2f855a;
+        }
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎓 학생 학습 페이지 데모</h1>
+            <p>실제 학생 데이터를 시뮬레이션하여 페이지를 체험해보세요</p>
+        </div>
+
+        <div class="demo-info">
+            <h3>📊 데모 데이터 정보</h3>
+            <div class="student-info">
+                <div class="info-card">
+                    <div class="info-label">학생명</div>
+                    <div class="info-value">김민준</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">학년</div>
+                    <div class="info-value">고2-3반</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">평가지 수</div>
+                    <div class="info-value">4개</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">평균 점수</div>
+                    <div class="info-value">84.2점</div>
+                </div>
+            </div>
+            <p><strong>포함된 데이터:</strong> 수학(85점), 영어(92점), 과학(78점), 국어(미제출), 과목별 진행률/성취도, 상세 문제/답안/피드백</p>
+        </div>
+
+        <div class="demo-buttons">
+            <a href="student/dashboard.html" class="demo-btn" onclick="setupDemo()">
+                📊 학습 대시보드
+            </a>
+            <a href="student/assessments.html" class="demo-btn" onclick="setupDemo()">
+                📝 평가 목록
+            </a>
+            <a href="student/assessment-detail.html?code=MATH001" class="demo-btn secondary" onclick="setupDemo()">
+                📋 수학 평가 상세보기
+            </a>
+            <a href="student/assessment-detail.html?code=ENG002" class="demo-btn secondary" onclick="setupDemo()">
+                🗣️ 영어 평가 상세보기
+            </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="resetDemo()" style="padding: 10px 20px; background: #e53e3e; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                🔄 데모 데이터 초기화
+            </button>
+        </div>
+
+        <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-top: 20px; font-size: 14px; color: #4a5568;">
+            <strong>💡 테스트 포인트:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Chart.js 그래프 렌더링 확인</li>
+                <li>평가지 리스트 표시 및 클릭 이동</li>
+                <li>필터링 및 검색 기능</li>
+                <li>상세보기 문제별 답안/피드백</li>
+                <li>모바일 반응형 디자인</li>
+                <li>PDF 다운로드 버튼 (alert 확인)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/demo-data.js"></script>
+    <script>
+        function setupDemo() {
+            // 데모 데이터를 localStorage에 저장
+            loadDemoData();
+            
+            // 학생 로그인 시뮬레이션
+            const studentData = {
+                id: "STU001",
+                name: "김민준",
+                email: "minjun.kim@student.edu",
+                type: "student"
+            };
+            localStorage.setItem('studentData', JSON.stringify(studentData));
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            console.log('✅ 데모 환경이 설정되었습니다.');
+        }
+
+        function resetDemo() {
+            localStorage.clear();
+            alert('🔄 데모 데이터가 초기화되었습니다.');
+            location.reload();
+        }
+
+        // 페이지 로드 시 자동으로 데모 데이터 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            setupDemo();
+        });
+    </script>
+</body>
+</html>

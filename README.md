@@ -283,3 +283,11 @@ ChatGPT Custom Function 기반으로 학생의 개별 성취도와 개념 이해
 - **CSS/JS 파일**: student.css(애니메이션, 반응형), student.js(API 연동 준비)
 - **특징**: 2025년 모던 UI, Chart.js 그래프, 모바일 최적화, 샘플 데이터 8개 평가지
 - **다음**: 백엔드 API 연동 및 실제 데이터 연결
+- **새 세션 복원 방법**:
+  1. SSH 접속: ssh mvp1@34.64.185.139
+  2. 프로젝트 이동: cd projects/개인화AI학습플랫폼MVP
+  3. 상태 확인: git log --oneline -5 && tail -10 README.md
+  4. Shrimp 확인: list_tasks status=all
+  5. 다음 작업: execute_task taskId="42ed5c17-449e-4d66-a30e-564d54441b51" (ChatGPT Webhook)
+- **완료 상태**: 학생 학습 페이지 100% 구현, 가상 데이터 테스트 환경 완비
+- **다음 우선순위**: ChatGPT Custom Function 연동 Webhook 구현 → API 통합 → Docker 배포
