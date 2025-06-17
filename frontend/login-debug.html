@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - AI 학습 플랫폼 (디버그)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 48px;
+            width: 100%;
+            max-width: 480px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .logo p {
+            color: #718096;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 8px;
+            display: block;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 8px;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: -400px;
+            background: #10b981;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.error {
+            background: #ef4444;
+        }
+        
+        .toast.show {
+            right: 20px;
+        }
+        
+        .debug-info {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .debug-info h4 {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .debug-log {
+            white-space: pre-wrap;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🎓 AI 학습 플랫폼</h1>
+            <p>개인화된 학습 경험을 시작하세요</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="form-label">사용자명</label>
+                <input type="text" id="username" name="username" class="form-input" 
+                       placeholder="test1, test2, test3, test4, test5" required>
+                <span id="usernameError" class="error-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" id="password" name="password" class="form-input" 
+                       placeholder="test123" required>
+                <span id="passwordError" class="error-message"></span>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span id="btnText">로그인</span>
+                <div class="loading" id="loading"></div>
+            </button>
+        </form>
+
+        <div class="links">
+            <a href="signup.html">회원가입</a>
+            <a href="/">메인으로</a>
+        </div>
+        
+        <div class="debug-info">
+            <h4>🐛 디버그 정보</h4>
+            <div class="debug-log" id="debugLog">디버그 로그가 여기에 표시됩니다...\n</div>
+        </div>
+    </div>
+
+    <script>
+        const debugLog = document.getElementById('debugLog');
+        
+        function addDebugLog(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            debugLog.textContent += `[${timestamp}] ${message}\n`;
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(`[DEBUG] ${message}`);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            addDebugLog('페이지 로드 완료');
+            
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                addDebugLog('폼 제출 이벤트 발생');
+                
+                clearErrors();
+                setLoading(true);
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                addDebugLog(`입력값 - 사용자명: "${username}", 비밀번호 길이: ${password.length}`);
+                
+                if (!username || !password) {
+                    addDebugLog('입력값 검증 실패');
+                    setLoading(false);
+                    showError('username', '모든 필드를 입력해주세요.');
+                    return;
+                }
+                
+                // 관리자 로그인 체크 (하드코딩)
+                if (username === 'admin' && password === 'admin') {
+                    addDebugLog('관리자 로그인 성공');
+                    showToast('관리자 로그인 성공!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                    return;
+                }
+                
+                // 학생 로그인 (백엔드 API 호출)
+                const apiUrl = 'https://yefam.w-partners.org/api/auth/login';
+                addDebugLog(`API 호출 시작: ${apiUrl}`);
+                
+                try {
+                    const requestData = {
+                        username: username,
+                        password: password
+                    };
+                    
+                    addDebugLog(`요청 데이터: ${JSON.stringify(requestData)}`);
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+                    
+                    addDebugLog(`응답 상태: ${response.status} ${response.statusText}`);
+                    addDebugLog(`응답 헤더: ${JSON.stringify(Object.fromEntries(response.headers))}`);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        addDebugLog(`응답 데이터: ${JSON.stringify(data)}`);
+                        
+                        localStorage.setItem('authToken', data.access_token);
+                        localStorage.setItem('userType', 'student');
+                        localStorage.setItem('username', username);
+                        
+                        addDebugLog('토큰 저장 완료');
+                        showToast('로그인 성공!', 'success');
+                        
+                        setTimeout(() => {
+                            addDebugLog('student-dashboard.html로 리다이렉트');
+                            window.location.href = 'student-dashboard.html';
+                        }, 1000);
+                    } else {
+                        const errorData = await response.text();
+                        addDebugLog(`API 오류 응답: ${errorData}`);
+                        showError('password', '아이디 또는 비밀번호가 올바르지 않습니다.');
+                    }
+                } catch (error) {
+                    addDebugLog(`네트워크 오류: ${error.name} - ${error.message}`);
+                    addDebugLog(`오류 스택: ${error.stack}`);
+                    console.error('Login error:', error);
+                    showError('password', `서버 연결에 실패했습니다: ${error.message}`);
+                }
+                
+                setLoading(false);
+            });
+            
+            // 에러 메시지 표시
+            function showError(fieldId, message) {
+                addDebugLog(`오류 표시: ${fieldId} - ${message}`);
+                const errorElement = document.getElementById(fieldId + 'Error');
+                const inputElement = document.getElementById(fieldId);
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                }
+                
+                if (inputElement) {
+                    inputElement.classList.add('error');
+                    inputElement.addEventListener('input', function() {
+                        inputElement.classList.remove('error');
+                        if (errorElement) {
+                            errorElement.textContent = '';
+                        }
+                    }, { once: true });
+                }
+            }
+            
+            // 에러 제거
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+                document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+            }
+            
+            // 로딩 상태 설정
+            function setLoading(isLoading) {
+                loginBtn.disabled = isLoading;
+                btnText.style.display = isLoading ? 'none' : 'inline';
+                loading.style.display = isLoading ? 'inline-block' : 'none';
+                addDebugLog(`로딩 상태: ${isLoading}`);
+            }
+            
+            // 토스트 메시지
+            function showToast(message, type = 'success') {
+                addDebugLog(`토스트 메시지: ${message} (${type})`);
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 100);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(400px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+            
+            addDebugLog('로그인 페이지 초기화 완료');
+        });
+    </script>
+</body>
+</html>
