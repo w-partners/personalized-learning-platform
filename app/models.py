@@ -65,7 +65,7 @@ class Student(Base):
         형식: 년도(4자리)+지역코드(2자리)+학교코드(3자리)+학년(1자리)+반(2자리)+번호(2자리)
         예시: 2025SE001302015 (2025년 서울 001학교 3학년 02반 15번)
         """
-        pattern = r'^20[0-9]{2}[A-Z]{2}[0-9]{3}[1-6][0-9]{2}[0-9]{2}$'
+        pattern = r"^[A-Z0-9]{6,20}$"
         return bool(re.match(pattern, code))
 
     def update_concept_score(self, concept: str, score: int) -> None:

@@ -1,0 +1,92 @@
+# yefam.w-partners.org를 위한 설정 (포트 80)
+server {
+    listen 80;
+    server_name yefam.w-partners.org;
+    
+    # 정적 파일 서빙
+    location /static/ {
+        alias /home/mvp1/projects/개인화AI학습플랫폼MVP/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # API 프록시
+    location /api/ {
+        proxy_pass http://localhost:8000;
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    # 헬스체크
+    location /health {
+        proxy_pass http://localhost:8000/health;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    
+    # API 문서
+    location /docs {
+        proxy_pass http://localhost:8000/docs;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    
+    # 프론트엔드 (메인 페이지)
+    location / {
+        root /home/mvp1/projects/개인화AI학습플랫폼MVP/frontend;
+        try_files $uri $uri/ /index.html;
+        index index.html;
+    }
+    
+    # 보안 헤더
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+}
+
+# 로컬 테스트를 위한 설정 (포트 8080)
+server {
+    listen 8080;
+    server_name localhost 127.0.0.1;
+    
+    # 정적 파일 서빙
+    location /static/ {
+        alias /home/mvp1/projects/개인화AI학습플랫폼MVP/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # API 프록시
+    location /api/ {
+        proxy_pass http://localhost:8000;
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    # 헬스체크
+    location /health {
+        proxy_pass http://localhost:8000/health;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    
+    # API 문서
+    location /docs {
+        proxy_pass http://localhost:8000/docs;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    
+    # 프론트엔드 (메인 페이지)
+    location / {
+        root /home/mvp1/projects/개인화AI학습플랫폼MVP/frontend;
+        try_files $uri $uri/ /index.html;
+        index index.html;
+    }
+}

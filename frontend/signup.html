@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - AI 학습 플랫폼</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>AI 학습 플랫폼</h1>
+                </div>
+                <h2>회원가입</h2>
+                <p>개인화 AI 학습 시스템에 오신 것을 환영합니다</p>
+            </div>
+
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        이메일
+                    </label>
+                    <input type="email" id="email" name="email" placeholder="user@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        비밀번호
+                    </label>
+                    <input type="password" id="password" name="password" placeholder="8자리 이상 입력해주세요" required>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">비밀번호 강도</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i>
+                        비밀번호 확인
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호를 다시 입력해주세요" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i>
+                        이름
+                    </label>
+                    <input type="text" id="name" name="name" placeholder="김철수" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="role">
+                            <i class="fas fa-user-tag"></i>
+                            역할
+                        </label>
+                        <select id="role" name="role" required>
+                            <option value="">선택해주세요</option>
+                            <option value="student">학생</option>
+                            <option value="teacher">선생님</option>
+                            <option value="parent">학부모</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="school">
+                            <i class="fas fa-school"></i>
+                            소속
+                        </label>
+                        <input type="text" id="school" name="school" placeholder="서울초등학교">
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            <a href="#" class="link">이용약관</a> 및 
+                            <a href="#" class="link">개인정보처리방침</a>에 동의합니다
+                        </span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeMarketing">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            마케팅 정보 수신에 동의합니다 (선택)
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="signupBtn">
+                    <i class="fas fa-user-plus"></i>
+                    회원가입
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>이미 계정이 있으신가요? <a href="login.html" class="link">로그인</a></p>
+            </div>
+
+            <div class="social-login">
+                <div class="divider">
+                    <span>또는</span>
+                </div>
+                <div class="social-buttons">
+                    <button class="social-btn google">
+                        <i class="fab fa-google"></i>
+                        Google로 회원가입
+                    </button>
+                    <button class="social-btn github">
+                        <i class="fab fa-github"></i>
+                        GitHub로 회원가입
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-visual">
+            <div class="visual-content">
+                <h3>AI 기반 개인화 학습</h3>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> 개별 맞춤 문제 생성</li>
+                    <li><i class="fas fa-check"></i> 실시간 성취도 분석</li>
+                    <li><i class="fas fa-check"></i> ChatGPT 연동 학습</li>
+                    <li><i class="fas fa-check"></i> 약점 보완 시스템</li>
+                </ul>
+                <div class="visual-animation">
+                    <div class="floating-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="floating-icon delay-1">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="floating-icon delay-2">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

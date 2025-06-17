@@ -309,7 +309,7 @@ function scrollToSection(sectionId) {
 }
 
 function openAPI() {
-    window.open('/api/docs', '_blank');
+    window.open('/docs', '_blank');
 }
 
 // 에러 핸들링

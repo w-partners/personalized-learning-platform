@@ -6,6 +6,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from app.models import Student
+from sqlalchemy import Integer
 from typing import List, Optional, Dict, Any
 import logging
 
