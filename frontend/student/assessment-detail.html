@@ -1,0 +1,134 @@
+                        {
+                            number: 2,
+                            text: '두 일차함수 y = 3x + 1과 y = -x + 5의 교점을 구하시오.',
+                            studentAnswer: '(1, 4)',
+                            correctAnswer: '(1, 4)',
+                            score: 15,
+                            maxScore: 15,
+                            feedback: '완벽합니다! 연립방정식을 정확히 풀었습니다.'
+                        },
+                        {
+                            number: 3,
+                            text: 'y = -2x + 4의 그래프가 지나는 두 점을 찾아 그래프를 그리시오.',
+                            studentAnswer: '(0, 4), (2, 0)',
+                            correctAnswer: '(0, 4), (2, 0)',
+                            score: 20,
+                            maxScore: 20,
+                            feedback: '정확한 두 점을 찾아 그래프를 잘 그렸습니다.'
+                        },
+                        {
+                            number: 4,
+                            text: '직선 y = 2x - 3에 평행하고 점 (1, 5)를 지나는 직선의 방정식을 구하시오.',
+                            studentAnswer: 'y = 2x + 3',
+                            correctAnswer: 'y = 2x + 3',
+                            score: 15,
+                            maxScore: 15,
+                            feedback: '평행선의 기울기가 같다는 조건을 잘 활용했습니다.'
+                        },
+                        {
+                            number: 5,
+                            text: '연립방정식 {2x + 3y = 7, 4x - y = 1}의 해를 구하시오.',
+                            studentAnswer: 'x = 1, y = 2',
+                            correctAnswer: 'x = 1, y = 1.67',
+                            score: 5,
+                            maxScore: 20,
+                            feedback: '계산 과정에서 실수가 있었습니다. 소거법이나 대입법을 다시 연습해보세요.'
+                        },
+                        {
+                            number: 6,
+                            text: '일차부등식 3x - 2 ≤ 7의 해를 구하고 수직선 위에 나타내시오.',
+                            studentAnswer: 'x ≤ 3',
+                            correctAnswer: 'x ≤ 3',
+                            score: 20,
+                            maxScore: 20,
+                            feedback: '일차부등식과 수직선 표현 모두 완벽합니다!'
+                        }
+                    ]
+                },
+                'ENG002': {
+                    code: 'ENG002',
+                    title: '현재완료 시제 활용 평가',
+                    subject: '영어',
+                    createdAt: '2025-06-16 10:20',
+                    submittedAt: '2025-06-16 11:10',
+                    totalScore: 92,
+                    maxScore: 100,
+                    questions: [
+                        {
+                            number: 1,
+                            text: 'Fill in the blank: I _____ (live) in Seoul for 5 years.',
+                            studentAnswer: 'have lived',
+                            correctAnswer: 'have lived',
+                            score: 15,
+                            maxScore: 15,
+                            feedback: 'Perfect! You understand the present perfect tense well.'
+                        },
+                        {
+                            number: 2,
+                            text: 'Choose the correct form: She _____ her homework yet. (not finish)',
+                            studentAnswer: "hasn't finished",
+                            correctAnswer: "hasn't finished",
+                            score: 15,
+                            maxScore: 15,
+                            feedback: 'Excellent use of negative present perfect!'
+                        }
+                    ]
+                }
+            };
+
+            const data = assessmentData[code] || assessmentData['MATH001'];
+            
+            // 헤더 정보 업데이트
+            document.getElementById('titleDisplay').textContent = data.title;
+            document.getElementById('codeDisplay').textContent = data.code;
+            document.getElementById('subjectDisplay').textContent = data.subject;
+            document.getElementById('createdDisplay').textContent = data.createdAt;
+            document.getElementById('submittedDisplay').textContent = data.submittedAt;
+            document.getElementById('scoreDisplay').textContent = `${data.totalScore}점 / ${data.maxScore}점`;
+            document.getElementById('assessmentTitle').textContent = data.title;
+
+            // 문제들 렌더링
+            renderQuestions(data.questions);
+        }
+
+        function renderQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            
+            container.innerHTML = questions.map(q => `
+                <div class="question-item">
+                    <div class="question-header">
+                        <span class="question-number">문제 ${q.number}</span>
+                        <span class="question-score">${q.score}/${q.maxScore}점</span>
+                    </div>
+                    <div class="question-text">${q.text}</div>
+                    <div class="answer-section">
+                        <div class="answer-label">내 답안:</div>
+                        <div class="student-answer">${q.studentAnswer}</div>
+                    </div>
+                    <div class="answer-section">
+                        <div class="answer-label">정답:</div>
+                        <div class="correct-answer">${q.correctAnswer}</div>
+                    </div>
+                    <div class="feedback">
+                        <strong>피드백:</strong> ${q.feedback}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function downloadPDF() {
+            const code = document.getElementById('codeDisplay').textContent;
+            alert(`${code} 평가지 PDF를 다운로드합니다.`);
+            // 실제 PDF 다운로드 로직 구현
+        }
+
+        function retakeAssessment() {
+            const code = document.getElementById('codeDisplay').textContent;
+            if (confirm('이 평가를 다시 보시겠습니까?')) {
+                alert(`${code} 재평가를 요청했습니다. 새로운 문제가 생성됩니다.`);
+                // 실제 재평가 로직 구현
+            }
+        }
+    </script>
+</body>
+</html>

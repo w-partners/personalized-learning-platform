@@ -1,0 +1,224 @@
+.activity-icon.completed {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.activity-icon.pending {
+    background: #fed7d7;
+    color: #742a2a;
+}
+
+.activity-icon.in-progress {
+    background: #bee3f8;
+    color: #1a365d;
+}
+
+.activity-info {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 2px;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #718096;
+}
+
+.activity-score {
+    font-weight: 700;
+    color: #38a169;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .progress-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .progress-bar {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .progress-percentage {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    
+    .dashboard-container {
+        padding: 10px;
+    }
+    
+    .chart-card {
+        padding: 15px;
+    }
+}
+
+/* 다크모드 지원 */
+@media (prefers-color-scheme: dark) {
+    .summary-card,
+    .progress-section,
+    .achievements-section,
+    .recent-activity,
+    .chart-card,
+    .assessments-section {
+        background: #2d3748;
+        color: white;
+        border-color: #4a5568;
+    }
+    
+    .summary-card .value,
+    .progress-subject,
+    .activity-title {
+        color: white;
+    }
+    
+    .assessments-table th {
+        background: #4a5568;
+    }
+    
+    .assessments-table tr:hover {
+        background: #4a5568;
+    }
+}
+
+/* 애니메이션 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-container > * {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.dashboard-container > *:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.dashboard-container > *:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.dashboard-container > *:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* 로딩 상태 */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: #718096;
+}
+
+.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-top: 2px solid #3182ce;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 성공/에러 메시지 */
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+.alert-error {
+    background: #fed7d7;
+    color: #742a2a;
+    border: 1px solid #feb2b2;
+}
+
+.alert-info {
+    background: #bee3f8;
+    color: #1a365d;
+    border: 1px solid #90cdf4;
+}
+
+/* 툴팁 */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d3748;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 스크롤바 커스터마이징 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}

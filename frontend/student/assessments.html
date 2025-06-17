@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>평가 목록 - 개인화 AI 학습 플랫폼</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .assessments-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .filters-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #4a5568;
+        }
+        
+        .filter-select, .filter-input {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .filter-btn {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .filter-btn:hover {
+            background: #2c5aa0;
+        }
+        
+        .assessments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .assessment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .assessment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .assessment-code {
+            background: #3182ce;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .subject-tag {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .assessment-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .assessment-dates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #718096;
+        }
+        
+        .date-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .date-label {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .score-display {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .score-completed {
+            color: #38a169;
+        }
+        
+        .score-pending {
+            color: #e53e3e;
+        }
+        
+        .pdf-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .pdf-btn:hover {
+            background: #c53030;
+        }
+        
+        .pdf-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+        
+        .nav-header {
+            background: #2d3748;
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: #4a5568;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+        
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .assessments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 헤더 -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">📊 대시보드</a>
+                <a href="assessments.html" class="nav-link active">📝 평가 목록</a>
+                <a href="profile.html" class="nav-link">👤 프로필</a>
+            </div>
+            <div class="user-info">
+                <span id="studentName">김학생님</span>
+                <a href="../login.html" class="nav-link">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="assessments-container">
+        <!-- 페이지 헤더 -->
+        <div class="page-header">
+            <h1>📝 내 평가 목록</h1>
+            <p>지금까지 응시한 모든 평가를 확인하고 관리하세요</p>
+        </div>
+
+        <!-- 필터 섹션 -->
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label class="filter-label">과목</label>
+                    <select id="subjectFilter" class="filter-select">
+                        <option value="">전체 과목</option>
+                        <option value="수학">수학</option>
+                        <option value="국어">국어</option>
+                        <option value="영어">영어</option>
+                        <option value="과학">과학</option>
+                        <option value="사회">사회</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">상태</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">전체 상태</option>
+                        <option value="completed">완료</option>
+                        <option value="pending">미제출</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">기간</label>
+                    <input type="date" id="dateFilter" class="filter-input">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">검색</label>
+                    <input type="text" id="searchFilter" class="filter-input" placeholder="제목으로 검색...">
+                </div>
+                <div class="filter-group">
+                    <button onclick="applyFilters()" class="filter-btn">🔍 검색</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 평가 목록 -->
+        <div id="assessmentsGrid" class="assessments-grid">
+            <!-- 평가 카드들이 여기에 동적으로 로드됩니다 -->
+        </div>
+
+        <!-- 빈 상태 -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <h3>📋 평가가 없습니다</h3>
+            <p>검색 조건을 변경하거나 새로운 평가를 기다려보세요.</p>
+        </div>
+    </div>
+
+    <script>
+        let allAssessments = [];
+        let filteredAssessments = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAssessments();
+        });
+
+        function loadAssessments() {
+            // 확장된 샘플 데이터
+            allAssessments = [
+                {
+                    code: 'MATH001',
+                    subject: '수학',
+                    title: '1차함수와 그래프 이해도 평가',
+                    createdAt: '2025-06-15 14:30',
+                    submittedAt: '2025-06-15 15:45',
+                    result: '85점',
+                    status: 'completed',
+                    score: 85,
+                    maxScore: 100
+                },
+                {
+                    code: 'ENG002',
+                    subject: '영어',
+                    title: '현재완료 시제 활용 평가',
+                    createdAt: '2025-06-16 10:20',
+                    submittedAt: '2025-06-16 11:10',
+                    result: '92점',
+                    status: 'completed',
+                    score: 92,
+                    maxScore: 100
+                },
+                {
+                    code: 'KOR003',
+                    subject: '국어',
+                    title: '고전문학 작품 분석 평가',
+                    createdAt: '2025-06-17 09:15',
+                    submittedAt: '-',
+                    result: '미제출',
+                    status: 'pending',
+                    score: 0,
+                    maxScore: 100
+                },
+                {
+                    code: 'SCI004',
+                    subject: '과학',
+                    title: '화학 반응식과 몰 개념',
+                    createdAt: '2025-06-16 16:45',
+                    submittedAt: '2025-06-17 08:30',
+                    result: '78점',
+                    status: 'completed',
+                    score: 78,
+                    maxScore: 100
+                },
+                {
+                    code: 'SOC005',
+                    subject: '사회',
+                    title: '근현대사 주요 사건 정리',
+                    createdAt: '2025-06-17 11:20',
+                    submittedAt: '-',
+                    result: '미제출',
+                    status: 'pending',
+                    score: 0,
+                    maxScore: 100
+                },
+                {
+                    code: 'MATH006',
+                    subject: '수학',
+                    title: '이차함수의 그래프와 최값',
+                    createdAt: '2025-06-14 13:20',
+                    submittedAt: '2025-06-14 14:35',
+                    result: '91점',
+                    status: 'completed',
+                    score: 91,
+                    maxScore: 100
+                },
+                {
+                    code: 'ENG007',
+                    subject: '영어',
+                    title: '조건법과 가정법 구분',
+                    createdAt: '2025-06-13 15:40',
+                    submittedAt: '2025-06-13 16:25',
+                    result: '88점',
+                    status: 'completed',
+                    score: 88,
+                    maxScore: 100
+                },
+                {
+                    code: 'KOR008',
+                    subject: '국어',
+                    title: '현대시 화자와 정서 분석',
+                    createdAt: '2025-06-12 10:30',
+                    submittedAt: '2025-06-12 11:45',
+                    result: '83점',
+                    status: 'completed',
+                    score: 83,
+                    maxScore: 100
+                }
+            ];
+
+            filteredAssessments = [...allAssessments];
+            renderAssessments();
+        }
+
+        function renderAssessments() {
+            const grid = document.getElementById('assessmentsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filteredAssessments.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = filteredAssessments.map(assessment => `
+                <div class="assessment-card" onclick="viewAssessment('${assessment.code}')">
+                    <div class="card-header">
+                        <span class="assessment-code">${assessment.code}</span>
+                        <span class="subject-tag">${assessment.subject}</span>
+                    </div>
+                    
+                    <h3 class="assessment-title">${assessment.title}</h3>
+                    
+                    <div class="assessment-dates">
+                        <div class="date-item">
+                            <span class="date-label">생성일:</span>
+                            <span>${assessment.createdAt}</span>
+                        </div>
+                        <div class="date-item">
+                            <span class="date-label">제출일:</span>
+                            <span>${assessment.submittedAt}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="score-display ${assessment.status === 'completed' ? 'score-completed' : 'score-pending'}">
+                            ${assessment.result}
+                        </div>
+                        <button 
+                            class="pdf-btn" 
+                            onclick="event.stopPropagation(); downloadPDF('${assessment.code}')"
+                            ${assessment.status === 'pending' ? 'disabled' : ''}
+                        >
+                            📄 PDF
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const subject = document.getElementById('subjectFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const date = document.getElementById('dateFilter').value;
+            const search = document.getElementById('searchFilter').value.toLowerCase();
+
+            filteredAssessments = allAssessments.filter(assessment => {
+                const matchSubject = !subject || assessment.subject === subject;
+                const matchStatus = !status || assessment.status === status;
+                const matchDate = !date || assessment.createdAt.startsWith(date);
+                const matchSearch = !search || assessment.title.toLowerCase().includes(search);
+                
+                return matchSubject && matchStatus && matchDate && matchSearch;
+            });
+
+            renderAssessments();
+        }
+
+        function viewAssessment(code) {
+            window.location.href = `assessment-detail.html?code=${code}`;
+        }
+
+        function downloadPDF(code) {
+            alert(`${code} 평가지 PDF를 다운로드합니다.`);
+            // 실제 PDF 다운로드 로직 구현
+        }
+
+        // 실시간 검색
+        document.getElementById('searchFilter').addEventListener('input', applyFilters);
+        document.getElementById('subjectFilter').addEventListener('change', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        document.getElementById('dateFilter').addEventListener('change', applyFilters);
+    </script>
+</body>
+</html>
